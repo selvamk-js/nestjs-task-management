@@ -28,6 +28,8 @@ module.exports = {
     "@typescript-eslint/no-shadow": ["error"],
     "no-shadow": "off",
     "class-methods-use-this": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": 0,
     'import/extensions': [
       'error',
       'ignorePackages',
