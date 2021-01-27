@@ -39,7 +39,6 @@ import { validationSchema } from './config/validation';
 
     TasksModule,
     AuthModule,
-    SharedModule,
   ],
 })
 export class AppModule {}
