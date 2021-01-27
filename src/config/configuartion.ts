@@ -3,8 +3,7 @@ export default () => ({
     transportPort: parseInt(process.env.TRANSPORT_PORT, 10),
     port: parseInt(process.env.DATABASE_PORT, 10) || 3000,
     jwtSecretKey: process.env.JWT_SECRET_KEY,
-    jwtExpiration: process.env.JWT_EXPIRATION_TIME,
-    appName: process.env.APP_NAME,
+    jwtExpiration: parseInt(process.env.JWT_EXPIRATION_TIME, 10),
   },
   database: {
     host: process.env.DB_HOST,
@@ -16,5 +15,10 @@ export default () => ({
   typeorm: {
     type: process.env.TYPE_ORM_DB,
     synchronize: process.env.TYPE_ORM_SYNC,
+  },
+  swagger: {
+    enable: process.env.ENABLE_SWAGGER,
+    appName: process.env.APP_NAME,
+    appVersion: process.env.APP_VERSION,
   },
 });
