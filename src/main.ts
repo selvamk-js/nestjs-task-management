@@ -15,9 +15,13 @@ async function bootstrap() {
   const port = configService.get('PORT');
 
   const options = new DocumentBuilder()
-    .setTitle('API')
-    .setVersion('0.0.1')
-    .addBearerAuth()
+    .setTitle('Task Management')
+    .setDescription('Understanding the Nest JS framework')
+    .setVersion('0.1')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
