@@ -5,9 +5,10 @@ import * as path from 'path';
 
 import { TasksModule } from './modules/tasks/tasks.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { SharedModule } from './modules/shared/shared.module';
 import configuration from './config/configuartion';
 import { validationSchema } from './config/validation';
+// import { SharedModule } from './shared/shared.module';
+// import { ConfigService } from './shared/services/config.service';
 // import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
@@ -24,18 +25,32 @@ import { validationSchema } from './config/validation';
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
+      useFactory: async (configService: ConfigService) => ({
+        type: 'mssql',
         host: configService.get('database.host'),
         port: +configService.get<number>('database.port'),
         username: configService.get('database.username'),
         password: configService.get('database.password'),
         database: configService.get('database.name'),
+        extra: {
+          trustedConnection: true,
+          options: {
+            encrypt: true,
+            enableArithAbort: true,
+          },
+        },
         entities: [`${__dirname}/**/*.entity{.js,.ts}`],
         synchronize: process.env.NODE_ENV === 'development' || false,
       }),
       inject: [ConfigService],
     }),
+
+    // TypeOrmModule.forRootAsync({
+    //   imports: [SharedModule],
+    //   useFactory: async (configService: ConfigService) =>
+    //     configService.typeOrmConfig,
+    //   inject: [ConfigService],
+    // }),
 
     TasksModule,
     AuthModule,

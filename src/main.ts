@@ -29,6 +29,8 @@ async function bootstrap() {
 
   await app.listen(port);
 
+  logger.log(`${configService.get('database')}`);
+
   logger.log(
     `Application listening on port ${configService.get('server.jwtSecretKey')}`,
   );
