@@ -21,10 +21,9 @@ export class TaskRepository extends Repository<Task> {
     }
 
     if (search) {
-      query.andWhere(
-        '(task.title LIKE :search OR task.description LIKE :search)',
-        { search: `%${search}%` },
-      );
+      query.andWhere('(task.title LIKE :search OR task.description LIKE :search)', {
+        search: `%${search}%`,
+      });
     }
 
     try {
@@ -32,9 +31,7 @@ export class TaskRepository extends Repository<Task> {
       return tasks;
     } catch (error) {
       this.logger.error(
-        `Failed to get tasks for user "${
-          user.username
-        }". Filters: ${JSON.stringify(filterDto)}`,
+        `Failed to get tasks for user "${user.username}". Filters: ${JSON.stringify(filterDto)}`,
         error.stack,
       );
       throw new InternalServerErrorException();

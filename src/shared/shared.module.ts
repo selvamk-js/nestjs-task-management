@@ -1,7 +1,7 @@
 import { Global, HttpModule, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
-import { ConfigService } from './services/config.service';
 import { GeneratorService } from './services/generator.service';
 import { ValidatorService } from './services/validator.service';
 
@@ -13,11 +13,11 @@ const providers = [ConfigService, ValidatorService, GeneratorService];
   imports: [
     HttpModule,
     JwtModule.registerAsync({
+      imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        secretOrPrivateKey: configService.get('JWT_SECRET_KEY'),
-        // if you want to use token with expiration date
+        secret: configService.get<string>('server.jwtSecretKey'),
         signOptions: {
-          expiresIn: configService.getNumber('JWT_EXPIRATION_TIME'),
+          expiresIn: configService.get<number>('server.jwtExpiration'),
         },
       }),
       inject: [ConfigService],

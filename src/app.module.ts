@@ -16,10 +16,7 @@ import { validationSchema } from './config/validation';
     ConfigModule.forRoot({
       load: [configuration],
       validationSchema,
-      envFilePath: path.join(
-        process.cwd(),
-        `.env.${process.env.NODE_ENV || 'development'}`,
-      ),
+      envFilePath: path.join(process.cwd(), `.env.${process.env.NODE_ENV || 'development'}`),
       isGlobal: true,
     }),
 
